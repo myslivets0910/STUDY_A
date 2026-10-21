@@ -13,9 +13,9 @@ class PetClient(BaseClient):
 
     def create_pets(self, data: dict):
         """Создание питомца с переданными данными POST"""
-        return self._post("/pet", json=data)
+        return self._post("pet/", json=data)
 
-    def update_pets(self, data):
+    def update_pets(self, data: dict):
         """Изменение питомца"""
         return self._put(f"/pet", json=data)
 
