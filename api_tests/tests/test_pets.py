@@ -6,7 +6,7 @@ class TestGetPetsCase:
     def test_get_pets_by_available_status(pet_client):
         """Проверка получения списка питомцев со статусом 'available' """
 
-        response = pet_client.get_pets_by_status('available')
+        response = pet_client.get_pet_by_status('available')
         data = response.json()
         # print(response.url)
 
@@ -18,7 +18,7 @@ class TestGetPetsCase:
     def test_get_pets_by_pending_status(pet_client):
         """Проверка получения списка питомцев со статусом 'pending' """
 
-        response = pet_client.get_pets_by_status('pending')
+        response = pet_client.get_pet_by_status('pending')
         data = response.json()
         # print(response.url)
 
@@ -30,7 +30,7 @@ class TestGetPetsCase:
     def test_get_pets_by_sold_status(pet_client):
         """ Проверка получения списка питомцев со статусом 'sold' """
 
-        response = pet_client.get_pets_by_status('sold')
+        response = pet_client.get_pet_by_status('sold')
         data = response.json()
 
         assert response.status_code == 200, "Код не 200"
@@ -41,7 +41,7 @@ class TestGetPetsCase:
     def test_get_pets_available(pet_client):
         """ Проверка на фильтрацию по статусу питомцев в статусе 'available' """
 
-        response = pet_client.get_pets_by_status('available')
+        response = pet_client.get_pet_by_status('available')
 
         assert response.status_code == 200, f"Ошибка API: {response.status_code}"
 
@@ -53,7 +53,7 @@ class TestGetPetsCase:
     def test_get_pets_id_and_name(pet_client):
         """Падающий тест, так как питомца ID 1 нет в базе"""
 
-        response = pet_client.get_pets_by_id(1)
+        response = pet_client.get_pet_by_id(1)
         data = response.json()
 
         assert response.status_code == 200
@@ -68,14 +68,14 @@ class TestGetPetsCase:
     def test_get_pets_empty_status(pet_client):
         """ Негативный тест на отсутствие данных """
         # баговый тест, так как возвращает 200
-        response = pet_client.get_pets_by_status()
+        response = pet_client.get_pet_by_status()
         assert response.status_code == 400
 
 
     def test_get_pets_id(pet_client):
         """Проверяем есть ли питомец в списке"""
 
-        response = pet_client.get_pets_by_id(66)
+        response = pet_client.get_pet_by_id(66)
         data = response.json()
 
         assert response.status_code == 200
@@ -89,12 +89,12 @@ class TestGetPetsCase:
 
     def test_get_pets_invalid_id(pet_client):
         """ Негативный тест на некорректные данные ID"""
-        response = pet_client.get_pets_by_id(1000000)
+        response = pet_client.get_pet_by_id(1000000)
         assert response.status_code == 404
 
     def test_get_pets_invalid_type_id(pet_client):
         """ Негативный тест на некорректные формат данных """
-        response = pet_client.get_pets_by_id("id")
+        response = pet_client.get_pet_by_id("id")
         assert response.status_code == 404
 
 
@@ -122,7 +122,7 @@ class TestPostPetsCase:
             "status": "available"
         }
 
-        response = pet_client.create_pets(new_pet_data)
+        response = pet_client.create_pet(new_pet_data)
         # проверка ответа
         assert response.status_code == 200
 
@@ -151,7 +151,7 @@ class TestPostPetsCase:
             "status": "pending"
         }
 
-        response = pet_client.create_pets(minimal_data)
+        response = pet_client.create_pet(minimal_data)
         assert response.status_code == 200
 
         created_pet = response.json()
