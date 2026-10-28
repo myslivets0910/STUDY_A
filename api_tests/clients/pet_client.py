@@ -29,3 +29,11 @@ class PetClient(BaseClient):
         """Удаление питомца"""
         return self._delete(f"pet/{pet_id}")
 
+    def set_api_key(self, api_key: str):
+        """Устанавливаем API Key в заголовки сессии"""
+        return self.session.headers.update({"api_key", api_key})
+
+    def clear_api_key(self):
+        """Очищаем API Key после использования"""
+        if "api_key" in self.session.headers:
+            del self.session.headers["api_key"]
