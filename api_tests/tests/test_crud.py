@@ -125,7 +125,7 @@ class TestFullCRUD:
 
         # PATCH частичное обновление
 
-        patch_response = pet_client.update_pet_full(put_pet_id, {"status": "pending"})
+        patch_response = pet_client.update_pet_patrial(put_pet_id, {"status": "pending"})
         assert patch_response.status_code == 200
 
         get_response = pet_client.get_pet_by_id(put_pet_id)

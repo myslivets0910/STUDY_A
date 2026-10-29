@@ -31,7 +31,7 @@ class PetClient(BaseClient):
 
     def set_api_key(self, api_key: str):
         """Устанавливаем API Key в заголовки сессии"""
-        return self.session.headers.update({"api_key", api_key})
+        return self.session.headers.update({"api_key": api_key})
 
     def clear_api_key(self):
         """Очищаем API Key после использования"""
