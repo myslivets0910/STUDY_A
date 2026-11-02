@@ -3,7 +3,7 @@ import pytest
 class TestGetPetsCase:
     """Тест для GET-запроса к Pets"""
 
-    def test_get_pets_by_available_status(pet_client):
+    def test_get_pets_by_available_status(self, pet_client):
         """Проверка получения списка питомцев со статусом 'available' """
 
         response = pet_client.get_pet_by_status('available')
@@ -15,7 +15,7 @@ class TestGetPetsCase:
         assert isinstance(data, list), "Полученные данные список"
 
 
-    def test_get_pets_by_pending_status(pet_client):
+    def test_get_pets_by_pending_status(self, pet_client):
         """Проверка получения списка питомцев со статусом 'pending' """
 
         response = pet_client.get_pet_by_status('pending')
@@ -27,7 +27,7 @@ class TestGetPetsCase:
         assert isinstance(data, list) , "Полученные данные список"
 
 
-    def test_get_pets_by_sold_status(pet_client):
+    def test_get_pets_by_sold_status(self, pet_client):
         """ Проверка получения списка питомцев со статусом 'sold' """
 
         response = pet_client.get_pet_by_status('sold')
@@ -38,7 +38,7 @@ class TestGetPetsCase:
         assert isinstance(data, list), "Полученные данные список"
 
 
-    def test_get_pets_available(pet_client):
+    def test_get_pets_available(self, pet_client):
         """ Проверка на фильтрацию по статусу питомцев в статусе 'available' """
 
         response = pet_client.get_pet_by_status('available')
@@ -50,7 +50,7 @@ class TestGetPetsCase:
             assert pet["status"] == "available", f' У {data} отсутствует статус'
 
 
-    def test_get_pets_id_and_name(pet_client):
+    def test_get_pets_id_and_name(self, pet_client):
         """Падающий тест, так как питомца ID 1 нет в базе"""
 
         response = pet_client.get_pet_by_id(1)
@@ -65,14 +65,14 @@ class TestGetPetsCase:
         assert "name" in data, "В ответе нет ключа name"
 
 
-    def test_get_pets_empty_status(pet_client):
+    def test_get_pets_empty_status(self, pet_client):
         """ Негативный тест на отсутствие данных """
         # баговый тест, так как возвращает 200
         response = pet_client.get_pet_by_status()
         assert response.status_code == 400
 
 
-    def test_get_pets_id(pet_client):
+    def test_get_pets_id(self, pet_client):
         """Проверяем есть ли питомец в списке"""
 
         response = pet_client.get_pet_by_id(66)
@@ -87,12 +87,12 @@ class TestGetPetsCase:
         assert "status" in data
 
 
-    def test_get_pets_invalid_id(pet_client):
+    def test_get_pets_invalid_id(self, pet_client):
         """ Негативный тест на некорректные данные ID"""
         response = pet_client.get_pet_by_id(1000000)
         assert response.status_code == 404
 
-    def test_get_pets_invalid_type_id(pet_client):
+    def test_get_pets_invalid_type_id(self, pet_client):
         """ Негативный тест на некорректные формат данных """
         response = pet_client.get_pet_by_id("id")
         assert response.status_code == 404
@@ -101,7 +101,7 @@ class TestGetPetsCase:
 class TestPostPetsCase:
     """Тест для POST-запроса к Pets"""
 
-    def test_create_pets_whit_nested_structure(pet_client):
+    def test_create_pets_whit_nested_structure(self, pet_client):
         """Проверка создания питомца с вложенными объектами (category) и массивом (tags))"""
         # Формируем сложный payload
         new_pet_data = {
@@ -142,7 +142,7 @@ class TestPostPetsCase:
         assert created_pet["tags"][0]['name'] == "friendly" # проверили что в первой записи списка тэгы есть ключ name со значение friendly
 
 
-    def test_created_pet_min_characteristics(pet_client):
+    def test_created_pet_min_characteristics(self, pet_client):
         """Проверяем создание с минимальным необходимым набором"""
 
         minimal_data = {
